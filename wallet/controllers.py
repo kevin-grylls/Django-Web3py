@@ -41,8 +41,19 @@ class WalletHandler():
         sender_address = self.findAddress(sender)
         receiver_address = self.findAddress(receiver)
 
+        print('Sender :', sender)
+        print('Sender_address: ', sender_address)
+        print('Receiver: ', receiver)
+        print('Receiver_address: ', receiver_address)
+
+        val_1 = unlockAccount(sender, str(sender_address), 1000)
+        val_2 = unlockAccount(receiver, str(receiver_address), 1000)
+
+        if val_1 is False or val_2 is False:
+            raise ValueError
+
         transaction_result = sendEther(
-            '0x743A82902b6C9bE5e11175a8816f01F2532404e9', '0x28c8AfFf625F4bac2A3cE214224DBC6044b37F82', amount)
+            sender=str(sender_address), receiver=str(receiver_address), amount=amount)
 
         return transaction_result
 
@@ -50,6 +61,7 @@ class WalletHandler():
 class ContractHandler():
     def deployContract(self, user_id, address):
         result = unlockAccount(user_id=user_id, address=address, duration=1000)
+
         return result
 
 

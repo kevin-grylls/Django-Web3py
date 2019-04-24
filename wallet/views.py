@@ -55,10 +55,9 @@ def transfer(request):
 
     result = WalletHandler().transferEther(
         sender=data['sender'], receiver=data['receiver'], amount=data['amount'])
-
     print(result)
 
-    return JsonResponse({'txId': str(result)})
+    return JsonResponse({'result ': 'ok'})
 
 
 @api_view(['POST'])
@@ -68,4 +67,4 @@ def deploy(request):
     response = ContractHandler().deployContract(
         user_id=data['userId'], address=data['address'])
 
-    return JsonResponse({'result': response})
+    return JsonResponse({'result': 'ok'})
