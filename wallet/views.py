@@ -20,12 +20,6 @@ class WalletList(generics.ListCreateAPIView):
     serializer_class = WalletSerializer
 
 
-@api_view(['GET'])
-def info(request, wallet_id):
-    response = "{ wallet: %s }"
-    return HttpResponse(response % wallet_id)
-
-
 @api_view(['POST'])
 def create(request):
     # 프론트 JS = camelCase / 백엔드 PY = snake_case
@@ -35,7 +29,8 @@ def create(request):
         user_id=data['userId'], password=data['password'])
 
     response = write_response(result)
-    return JsonResponse(response)
+    return JsonResponse({'userId': result.user_id, 'password': result.password,
+                         'address': result.address, 'privateKey': result.private_key, 'createdAt': result.created_at})
 
 
 @api_view(['POST'])

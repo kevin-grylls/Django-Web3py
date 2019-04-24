@@ -2,7 +2,7 @@ from web3 import Web3, HTTPProvider, IPCProvider
 import os
 
 
-w3 = Web3(HTTPProvider('http://localhost:7545'))
+w3 = Web3(HTTPProvider('http://192.168.0.27:7545'))
 w3.eth.enable_unaudited_features()
 
 
