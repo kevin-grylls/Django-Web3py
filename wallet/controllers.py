@@ -60,9 +60,12 @@ class WalletHandler():
 
 class ContractHandler():
     def deployContract(self, user_id, address):
-        result = unlockAccount(user_id=user_id, address=address, duration=1000)
+        val_1 = unlockAccount(user_id=user_id, address=address, duration=1000)
 
-        return result
+        if val_1 is False:
+            raise ValueError
+
+        return val_1
 
 
 class TransactionHandler():
