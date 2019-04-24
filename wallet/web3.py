@@ -1,7 +1,6 @@
 from web3 import Web3, HTTPProvider, IPCProvider
 import os
 
-# Web3 Handler 따로 구현해서 메소드만 호출하는 방식
 
 w3 = Web3(HTTPProvider('http://localhost:7545'))
 w3.eth.enable_unaudited_features()
@@ -26,10 +25,9 @@ def getBalance(address):
 
 
 def sendEther(sender, receiver, amount):
-    tranfer_amount = w3.toWei(str(amount), 'ether')  # wei 변환
+    wai_amount = w3.toWei(str(amount), 'ether')  # wei 변환
     result = w3.eth.sendTransaction(
-        {'to': receiver, 'from': sender, 'value': tranfer_amount})
-
+        {'to': receiver, 'from': sender, 'value': wai_amount})
     return result
 
 
