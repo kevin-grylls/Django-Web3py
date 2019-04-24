@@ -1,5 +1,5 @@
-from .models import Wallet
-from .web3 import getAccount, getBalance, sendEther, unlockAccount
+from .models import Wallet, Issue
+from .web3 import getAccount, getBalance, sendEther, unlockAccount, deployContract
 import json
 
 
@@ -46,6 +46,7 @@ class WalletHandler():
         print('Receiver: ', receiver)
         print('Receiver_address: ', receiver_address)
 
+        # 트랜잭션 수행 전 계정 언락
         val_1 = unlockAccount(sender, str(sender_address), 1000)
         val_2 = unlockAccount(receiver, str(receiver_address), 1000)
 
@@ -59,13 +60,17 @@ class WalletHandler():
 
 
 class ContractHandler():
-    def deployContract(self, user_id, address):
+    def initContract(self, user_id, address):
         val_1 = unlockAccount(user_id=user_id, address=address, duration=1000)
 
         if val_1 is False:
             raise ValueError
 
-        return val_1
+        contract_address = deployContract(address=address)
+        issue = Issue(erc20_token=contract_address)
+        issue.save()
+
+        return issue.str
 
 
 class TransactionHandler():

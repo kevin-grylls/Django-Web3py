@@ -1,13 +1,20 @@
 from web3 import Web3, HTTPProvider, IPCProvider
-import os
-
+from .contracts import get_abi, get_bin
 
 w3 = Web3(HTTPProvider('http://192.168.0.27:8545'))
 w3.eth.enable_unaudited_features()
 
 
-def getSalt():
-    return os.urandom(16)
+def deployContract(address):
+
+    w3.eth.defaultAccount = address
+
+    tx_hash = w3.eth.contract(
+        abi=get_abi(),
+        bytecode=get_bin()).deploy()
+
+    address = w3.eth.getTransactionReceipt(tx_hash)['contractAddress']
+    return address
 
 
 def getWeb3():
@@ -21,7 +28,7 @@ def getAccount(user_id):
 
 def unlockAccount(user_id, address, duration):
     result = w3.personal.unlockAccount(address, user_id, duration)
-    print('result: ', result)
+    print('Unlock Result: ', result)
     return result
 
 
@@ -35,9 +42,3 @@ def sendEther(sender, receiver, amount):
     result = w3.eth.sendTransaction(
         {'to': receiver, 'from': sender, 'value': wai_amount})
     return result
-
-
-def deployContract(address):
-
-    w3.eth.defaultAccount = address
-    return ''

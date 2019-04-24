@@ -64,7 +64,7 @@ def transfer(request):
 def deploy(request):
     data = json.loads(request.body)
 
-    response = ContractHandler().deployContract(
+    result = ContractHandler().initContract(
         user_id=data['userId'], address=data['address'])
 
-    return JsonResponse({'result': 'ok'})
+    return JsonResponse({'result': str(result)})

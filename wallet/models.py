@@ -18,6 +18,17 @@ class Wallet(models.Model):
         return self.address
 
 
+class Issue(models.Model):
+    erc20_token = models.CharField(max_length=50, unique=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['created_at', ]
+
+    def __str__(self):
+        return self.erc20_token
+
+
 class Transaction(models.Model):
     origin = models.ForeignKey(Wallet, on_delete=models.CASCADE)
     destination = models.CharField(max_length=40)
