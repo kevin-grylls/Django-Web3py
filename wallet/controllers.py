@@ -11,9 +11,9 @@ class WalletHandler():
 
     def makeWallet(self, user_id, password):
         account = getAccount()  # Web3 통해서 먼저 어드레스를 받아오고
-        wallet = Wallet(user_id=user_id, password=password, address=account.address,
-                        private_key=account.privateKey.hex())
-        wallet.save()   # 개인, 월렛정보 추합 후 저장
+        wallet = Wallet(user_id=user_id, password=password, address=account['address'],
+                        private_key=account['private_key'].hex())
+        wallet.save()
         return wallet
 
     def keystore(self):

@@ -12,7 +12,7 @@ def write_response(result):
     # For Test
     return {'userId': result.user_id, 'password': result.password,
             'address': result.address, 'privateKey': result.private_key,
-            'balance': result.balance, 'createdAt': result.created_at}
+            'createdAt': result.created_at}
 
 
 class WalletList(generics.ListCreateAPIView):
@@ -29,8 +29,7 @@ def create(request):
         user_id=data['userId'], password=data['password'])
 
     response = write_response(result)
-    return JsonResponse({'userId': result.user_id, 'password': result.password,
-                         'address': result.address, 'privateKey': result.private_key, 'createdAt': result.created_at})
+    return JsonResponse(response)
 
 
 @api_view(['POST'])

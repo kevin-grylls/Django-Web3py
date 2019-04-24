@@ -2,7 +2,7 @@ from web3 import Web3, HTTPProvider, IPCProvider
 import os
 
 
-w3 = Web3(HTTPProvider('http://192.168.0.27:7545'))
+w3 = Web3(HTTPProvider('http://192.168.0.27:8545'))
 w3.eth.enable_unaudited_features()
 
 
@@ -15,8 +15,10 @@ def getWeb3():
 
 
 def getAccount():
-    address = w3.eth.account.create(getSalt())
-    return address
+    # address = w3.eth.account.create(getSalt())
+    address = w3.personal.newAccount('pass1')
+    print(address)
+    return {'address': address, 'private_key': getSalt()}
 
 
 def getBalance(address):
