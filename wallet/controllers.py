@@ -1,5 +1,5 @@
 from .models import Wallet
-from .web3 import getAccount, getBalance, sendEther
+from .web3 import getAccount, getBalance, sendEther, unlockAccount
 import json
 
 
@@ -10,14 +10,11 @@ class WalletHandler():
         return Wallet.objects.filter(user_id=user_id).first()
 
     def makeWallet(self, user_id, password):
-        account = getAccount()  # Web3 통해서 먼저 어드레스를 받아오고
+        account = getAccount(user_id)  # Web3 통해서 먼저 어드레스를 받아오고
         wallet = Wallet(user_id=user_id, password=password, address=account['address'],
-                        private_key=account['private_key'].hex())
+                        private_key=user_id)
         wallet.save()
         return wallet
-
-    def keystore(self):
-        return Wallet.objects.all()
 
     def findWallet(self, user_id, password):
         if not user_id or not password:
@@ -26,6 +23,9 @@ class WalletHandler():
         account = Wallet.objects.filter(
             user_id=user_id, password=password).first()
         return account
+
+    def keystore(self):
+        return Wallet.objects.all()
 
     def getRest(self, user_id):
         if not user_id:
@@ -48,8 +48,9 @@ class WalletHandler():
 
 
 class ContractHandler():
-    def deployContract(self):
-        return ''
+    def deployContract(self, user_id, address):
+        result = unlockAccount(user_id=user_id, address=address, duration=1000)
+        return result
 
 
 class TransactionHandler():

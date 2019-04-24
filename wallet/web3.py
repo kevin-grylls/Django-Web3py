@@ -7,18 +7,24 @@ w3.eth.enable_unaudited_features()
 
 
 def getSalt():
-    return os.urandom(16)
+    return os.urandom(4)
 
 
 def getWeb3():
     return w3
 
 
-def getAccount():
+def getAccount(user_id):
     # address = w3.eth.account.create(getSalt())
-    address = w3.personal.newAccount('pass1')
-    print(address)
-    return {'address': address, 'private_key': getSalt()}
+    # private_key = getSalt()
+    address = w3.personal.newAccount(user_id)
+    return {'address': address, 'private_key': user_id}
+
+
+def unlockAccount(user_id, address, duration):
+    result = w3.personal.unlockAccount(address, user_id, duration)
+    print('result: ', result)
+    return result
 
 
 def getBalance(address):
@@ -34,4 +40,5 @@ def sendEther(sender, receiver, amount):
 
 
 def deployContract():
+
     return ''

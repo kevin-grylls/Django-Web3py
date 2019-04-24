@@ -1,7 +1,7 @@
 from django.http import JsonResponse
 from rest_framework import generics
 from rest_framework.decorators import api_view
-from .controllers import WalletHandler
+from .controllers import WalletHandler, ContractHandler
 from .serializers import WalletSerializer
 import json
 
@@ -59,3 +59,13 @@ def transfer(request):
     print(result)
 
     return JsonResponse({'txId': str(result)})
+
+
+@api_view(['POST'])
+def deploy(request):
+    data = json.loads(request.body)
+
+    response = ContractHandler().deployContract(
+        user_id=data['userId'], address=data['address'])
+
+    return JsonResponse({'result': response})
