@@ -8,5 +8,9 @@ urlpatterns = [
     path('login/', views.login, name='login'),
     path('transfer_ether/', views.transfer_ether, name='transfer_ether'),
     path('transfer_token/', views.transfer_token, name='transfer_token'),
+    path('transfer_token_from/', views.transfer_token_from,
+         name='transter_token_from'),
     path('deploy/', views.deploy, name='deploy'),
+    path('balance_of/', views.balance_of, name='balance_of'),
+    path('unlock_all/', views.unlock_all, name='unlock_all'),
 ]

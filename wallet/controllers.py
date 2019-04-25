@@ -1,5 +1,5 @@
 from .models import Wallet, Contract
-from .web3 import getAccount, getBalance, sendEther, unlockAccount, deployContract, getContract
+from .web3 import getAccount, getBalance, sendEther, unlockAccount, deployContract, getContract, checksumAddress
 import json
 
 
@@ -101,9 +101,42 @@ class ContractHandler():
 
         return contract
 
+    def balanceOf(self, user_id, address, ca):
+        """
+        Check balance of User
+        """
+
+        val_1 = unlockAccount(user_id=user_id, address=address, duration=1000)
+
+        if val_1 is False:
+            raise ValueError
+
+        contract = getContract(address=ca)
+        result = contract.functions.balanceOf(str(address)).call()
+
+        return result
+
+    def transferToken(self, receiver, amount, ca):
+        """
+        Transfer Token To
+        """
+
+        val_1 = unlockAccount(
+            user_id=receiver['userId'], address=receiver['address'], duration=1000)
+
+        if val_1 is False:
+            return ValueError
+
+        contract = getContract(address=ca)
+        result = contract.functions.transfer(
+            str(receiver['address']), amount).call()
+
+        print('Transaction Result: ', result)
+        return result
+
     def transferTokenFrom(self, sender, receiver, amount, ca):
         """
-        Transfer Token
+        Transfer Token From - To
         """
 
         val_1 = unlockAccount(
@@ -137,3 +170,16 @@ class ContractHandler():
         print(contract.functions[selected_function]().call())
 
         return 'ok'
+
+
+class Test():
+    """
+    개발환경 테스트 클래스
+    """
+
+    def unlockAll(self):
+        for wallet in Wallet.objects.all():
+            unlockAccount(user_id=wallet.user_id,
+                          address=wallet.address, duration=1000)
+
+        return True

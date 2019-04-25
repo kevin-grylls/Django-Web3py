@@ -25,11 +25,16 @@ def deployContract(address):
     return tx_receipt['contractAddress']
 
 
+def checksumAddress(address):
+
+    return w3.toChecksumAddress(address)
+
+
 def getContract(address):
     """
     배포된 컨트랙트를 반환합니다.
     """
-    return w3.eth.contract(address=address, abi=get_abi())
+    return w3.eth.contract(address=checksumAddress(address), abi=get_abi())
 
 
 def getWeb3():

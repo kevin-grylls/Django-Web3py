@@ -1,7 +1,7 @@
 from django.http import JsonResponse
 from rest_framework import generics
 from rest_framework.decorators import api_view
-from .controllers import WalletHandler, ContractHandler
+from .controllers import WalletHandler, ContractHandler, Test
 from .serializers import WalletSerializer
 import json
 
@@ -71,11 +71,37 @@ def deploy(request):
 
 
 @api_view(['POST'])
+def balance_of(request):
+    data = json.loads(request.body)
+
+    result = ContractHandler().balanceOf(
+        data['userId'], address=data['address'], ca=data['contractAddress'])
+
+    return JsonResponse({'result': result})
+
+
+@api_view(['POST'])
 def transfer_token(request):
+    data = json.loads(request.body)
+
+    result = ContractHandler().transferToken(
+        receiver=data['receiver'], amount=data['amount'], ca=data['contractAddress'])
+
+    return JsonResponse({'result': result})
+
+
+@api_view(['POST'])
+def transfer_token_from(request):
     data = json.loads(request.body)
 
     result = ContractHandler().transferTokenFrom(
         sender=data['sender'], receiver=data['receiver'], amount=data['amount'], ca=data['contractAddress']
     )
 
+    return JsonResponse({'result': result})
+
+
+@api_view(['GET'])
+def unlock_all(request):
+    result = Test().unlockAll()
     return JsonResponse({'result': result})
