@@ -1,5 +1,5 @@
 from .models import Wallet, Contract
-from .web3 import getAccount, getBalance, sendEther, unlockAccount, deployContract
+from .web3 import getAccount, getBalance, sendEther, unlockAccount, deployContract, getContract
 import json
 
 
@@ -96,16 +96,44 @@ class ContractHandler():
             raise ValueError
 
         contract_address = deployContract(address=address)
-        # issue = Issue(erc20_token=contract_address)
-        # issue.save()
+        contract = Contract(address=contract_address)
+        contract.save()
 
-        return contract_address
+        return contract
 
+    def transferTokenFrom(self, sender, receiver, amount, ca):
+        """
+        Transfer Token
+        """
 
-class TransactionHandler():
-    """
-    EVM Transaction Handler Class.
-    """
+        val_1 = unlockAccount(
+            user_id=sender['userId'], address=sender['address'], duration=1000)
+        val_2 = unlockAccount(
+            user_id=receiver['userId'], address=receiver['address'], duration=1000)
 
-    def sendToken(self):
-        return ''
+        if val_1 is False or val_2 is False:
+            raise ValueError
+
+        contract = getContract(address=ca)
+
+        print(contract.functions.transferFrom(
+            sender['address'], receiver['address'], amount).call())
+
+        return 'ok'
+
+    def callFunction(self, func_name, ca):
+        """
+        Call funtions of Contract
+        """
+
+        # 딕셔너리 맵핑
+        # RPC from client as front end method
+        rpc_list = {'getBalance': 'balanceOf',
+                    'getSupploy': 'totalSupply'}
+
+        contract = getContract(address=ca)
+        selected_function = rpc_list[func_name]
+
+        print(contract.functions[selected_function]().call())
+
+        return 'ok'

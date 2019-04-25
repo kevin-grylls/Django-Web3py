@@ -22,13 +22,29 @@ class Wallet(models.Model):
         return self.address
 
 
+class Contract(models.Model):
+    """
+    발급된 컨트랙트 어드레스를 관리합니다.
+    """
+    address = models.CharField(max_length=42, unique=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['created_at', ]
+
+    def __str__(self):
+        return self.address
+
+
 class Transaction(models.Model):
     """
     Token Transaction 을 기록합니다.
     노드에서 일어난 거래 기록을 동기화하는 테이블입니다.
     """
-    origin = models.ForeignKey(Wallet, on_delete=models.CASCADE)
-    destination = models.CharField(max_length=42)
+
+    contract_address = models.CharField(max_length=42, default=None)
+    origin = models.CharField(max_length=42, default=None)
+    destination = models.CharField(max_length=42, default=None)
     amount = models.FloatField(default=0.0)
     block_number = models.IntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
@@ -38,17 +54,3 @@ class Transaction(models.Model):
 
     def __str__(self):
         return self.block_number
-
-
-class Contract(models.Model):
-    """
-    발급된 컨트랙트 어드레스를 관리합니다.
-    """
-    ca = models.CharField(max_length=42, unique=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    class Meta:
-        ordering = ['created_at', ]
-
-    def __str__(self):
-        return self.erc20_token

@@ -3,6 +3,8 @@ import os
 import json
 
 cur_dir = os.path.dirname(__file__)
+
+# Base Token
 abi_path = os.path.join(cur_dir, '..', 'contracts', 'abi.json')
 bin_path = os.path.join(cur_dir, '..', 'contracts', 'bytecode.json')
 

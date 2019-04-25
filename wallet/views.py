@@ -50,7 +50,7 @@ def balance(request, user_id):
 
 
 @api_view(['POST'])
-def transfer(request):
+def transfer_ether(request):
     data = json.loads(request.body)
 
     result = WalletHandler().transferEther(
@@ -67,4 +67,15 @@ def deploy(request):
     result = ContractHandler().initContract(
         user_id=data['userId'], address=data['address'])
 
-    return JsonResponse({'contractAddress': str(result)})
+    return JsonResponse({'contractAddress': str(result.address), 'createdAt': str(result.created_at)})
+
+
+@api_view(['POST'])
+def transfer_token(request):
+    data = json.loads(request.body)
+
+    result = ContractHandler().transferTokenFrom(
+        sender=data['sender'], receiver=data['receiver'], amount=data['amount'], ca=data['contractAddress']
+    )
+
+    return JsonResponse({'result': result})
