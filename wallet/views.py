@@ -67,4 +67,4 @@ def deploy(request):
     result = ContractHandler().initContract(
         user_id=data['userId'], address=data['address'])
 
-    return JsonResponse({'result': str(result)})
+    return JsonResponse({'contractAddress': str(result)})
