@@ -2,9 +2,8 @@ from web3 import Web3, HTTPProvider, IPCProvider
 from .contracts import get_abi, get_bin
 
 w3 = Web3(HTTPProvider('http://192.168.0.27:8545'))
+# w3 = Web3(HTTPProvider('http://localhost:7545'))
 w3.eth.enable_unaudited_features()
-
-ca_for_test = '0x02a56b13256c4899775dfe54ed5da9bd1a066948'
 
 
 def deployContract(address):
@@ -20,9 +19,8 @@ def deployContract(address):
 
     print('Contract: ', Contract)
     print('tx_hash: ', tx_hash.hex())
-    print('CA: ', tx_receipt['contractAddress'])
 
-    return tx_receipt['contractAddress']
+    return tx_receipt
 
 
 def checksumAddress(address):
@@ -44,6 +42,10 @@ def getWeb3():
     return w3
 
 
+def getCoinbase():
+    return w3.eth.coinbase
+
+
 def getAccount(user_id):
     """
     사용자의 지갑 정보를 반환
@@ -55,7 +57,7 @@ def getAccount(user_id):
 
 def unlockAccount(user_id, address, duration):
     """
-    트랜잭션 수행 전 계정을 언락상태로 설정하고 결과 값을 리턴합니다.
+    계정을 언락상태로 설정하고 실행 결과를 리턴합니다.
     """
     result = w3.personal.unlockAccount(address, user_id, duration)
     print('Unlock Result: ', result)

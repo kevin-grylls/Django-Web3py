@@ -5,7 +5,7 @@ import json
 
 class WalletHandler():
     """
-    Personal Wallet Handler Class.
+    노드와 미들웨어간 지갑 관리를 지원하는 핸들러입니다.
     """
 
     @staticmethod
@@ -83,7 +83,7 @@ class WalletHandler():
 
 class ContractHandler():
     """
-    ERC20 Token Handler Class.
+    ERC20 Token 메인 인터페이스를 호출하는 핸들러입니다.
     """
 
     def initContract(self, user_id, address):
@@ -95,11 +95,36 @@ class ContractHandler():
         if val_1 is False:
             raise ValueError
 
-        contract_address = deployContract(address=address)
-        contract = Contract(address=contract_address)
+        tx_receipt = deployContract(address=address)
+        print('Block Number: ', tx_receipt['blockNumber'])
+        print('Gas Used: ', tx_receipt['gasUsed'])
+        print('CA: ', tx_receipt['contractAddress'])
+        print('From: ', tx_receipt['from'])
+
+        contract = Contract(
+            address=tx_receipt['contractAddress'], owner=tx_receipt['from'], block_number=tx_receipt['blockNumber'])
         contract.save()
 
         return contract
+
+    def getAllFunctions(self, ca):
+        """
+        스마트 컨트랙트의 모든 함수를 조회합니다.
+        """
+        contract = getContract(address=ca)
+        result = contract.all_functions()
+        print('Functions: ', str(result))
+        return str(result)
+
+    def totalSupply(self, ca):
+        """
+        Total Supply
+        """
+
+        contract = getContract(address=ca)
+        result = contract.functions.totalSupply().call()
+
+        return result
 
     def balanceOf(self, user_id, address, ca):
         """
@@ -112,7 +137,8 @@ class ContractHandler():
             raise ValueError
 
         contract = getContract(address=ca)
-        result = contract.functions.balanceOf(str(address)).call()
+        checksum_address = checksumAddress(address)
+        result = contract.functions.balanceOf(checksum_address).call()
 
         return result
 
@@ -128,8 +154,9 @@ class ContractHandler():
             return ValueError
 
         contract = getContract(address=ca)
+        checksum_address = checksumAddress(receiver['address'])
         result = contract.functions.transfer(
-            str(receiver['address']), amount).call()
+            checksum_address, amount).transact()
 
         print('Transaction Result: ', result)
         return result
@@ -152,7 +179,7 @@ class ContractHandler():
         print(contract.functions.transferFrom(
             sender['address'], receiver['address'], amount).call())
 
-        return 'ok'
+        return True
 
     def callFunction(self, func_name, ca):
         """
@@ -169,12 +196,12 @@ class ContractHandler():
 
         print(contract.functions[selected_function]().call())
 
-        return 'ok'
+        return True
 
 
 class Test():
     """
-    개발환경 테스트 클래스
+    테스트를 위한 RPC 를 모아놓은 핸들러입니다.
     """
 
     def unlockAll(self):

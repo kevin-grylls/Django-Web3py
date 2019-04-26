@@ -11,6 +11,8 @@ urlpatterns = [
     path('transfer_token_from/', views.transfer_token_from,
          name='transter_token_from'),
     path('deploy/', views.deploy, name='deploy'),
+    path('all_functions/', views.all_functions, name='all_functions'),
     path('balance_of/', views.balance_of, name='balance_of'),
+    path('total_supply/', views.total_supply, name='total_supply'),
     path('unlock_all/', views.unlock_all, name='unlock_all'),
 ]

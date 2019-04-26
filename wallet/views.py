@@ -70,6 +70,21 @@ def deploy(request):
     return JsonResponse({'contractAddress': str(result.address), 'createdAt': str(result.created_at)})
 
 
+@api_view(['GET'])
+def all_functions(request):
+    data = request.query_params
+    result = ContractHandler().getAllFunctions(ca=data['ca'])
+    return JsonResponse({'result': result})
+
+
+@api_view(['GET'])
+def total_supply(request):
+    data = request.query_params
+    result = ContractHandler().totalSupply(ca=data['ca'])
+
+    return JsonResponse({'result': result})
+
+
 @api_view(['POST'])
 def balance_of(request):
     data = json.loads(request.body)
