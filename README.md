@@ -23,6 +23,11 @@ $ python3 manage.py runserver      // 테스트 서버 기동
 ---
 
 - 테스트 절차
+- 사용자와 컨트랙트 정보의 경우, DB 에서 조회하고 API 호출을 통해 결과를 보는 것이 빠릅니다.
+- DB 클라이언트 툴, Rest API 툴을 같이 사용하시는 것을 권장합니다.
+- 현 시점으로 회원가입, 정보조회, 스마트 컨트랙트 배포, 토큰 할당, 토큰 전송, 잔액 조회 API를 제공합니다.
+
+---
 
 - ERC20 토큰 내에서 거래할 계정들을 먼저 생성합니다.
 - POST -> http://localhost:8000/wallet/create/
@@ -98,6 +103,34 @@ $ python3 manage.py runserver      // 테스트 서버 기동
   "blockNumber": 8081,
   "from": "0xae628b2698d1f213d461307b139f255d01febafb",
   "gasUsed": 36158
+}
+```
+
+- 이제 참여자간 토큰을 전송해 보겠습니다.
+- 수신자와 송신자, 수량과 CA 정보로 API 호출합니다.
+
+```json
+{
+  "sender": {
+    "userId": "irene",
+    "address": "0x600aAD4C0089cb7b927ffff535779420237EBba5"
+  },
+  "receiver": {
+    "userId": "ivy",
+    "address": "0x9Cda9C301b07D4A2B03bfA945800501502f97F67"
+  },
+  "amount": 100,
+  "contractAddress": "0xA4753bA6DDb8C86b205f228ddfE63a95803d888b"
+}
+```
+
+- 정상적인 호출 시 반환 예상 값
+
+```json
+{
+  "blockNumber": 8304,
+  "from": "0xae628b2698d1f213d461307b139f255d01febafb",
+  "gasUsed": 37408
 }
 ```
 

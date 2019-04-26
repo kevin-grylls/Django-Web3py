@@ -114,7 +114,8 @@ def transfer_token_from(request):
         sender=data['sender'], receiver=data['receiver'], amount=data['amount'], ca=data['contractAddress']
     )
 
-    return JsonResponse({'result': result})
+    return JsonResponse({'blockNumber': result['blockNumber'],
+                         'from': result['from'], 'gasUsed': result['gasUsed']})
 
 
 @api_view(['GET'])

@@ -110,11 +110,6 @@ class ContractHandler():
 
         return contract
 
-    def unlockOwner(self):
-        """
-        Unlock Owner
-        """
-
     def getAllFunctions(self, ca):
         """
         스마트 컨트랙트의 모든 함수를 조회합니다.
@@ -126,7 +121,7 @@ class ContractHandler():
 
     def totalSupply(self, ca):
         """
-        Total Supply
+        전체 토큰 발행량을 조회합니다.
         """
 
         contract = getContract(address=ca)
@@ -136,7 +131,7 @@ class ContractHandler():
 
     def balanceOf(self, user_id, address, ca):
         """
-        Check balance of User
+        사용자의 토큰 보유량을 확인합니다.
         """
 
         val_1 = unlockAccount(user_id=user_id, address=address, duration=1000)
@@ -150,17 +145,26 @@ class ContractHandler():
 
         return result
 
-    def transferToken(self, receiver, amount, ca):
-        """
-        Transfer Token To
-        """
-
+    def unlockHolder(self, ca):
         # 컨트랙트 정보 검색
         contract_info = Contract.objects.filter(address=ca).first()
 
         # 토큰 홀더 계정을 먼저 언락
         val_1 = unlockAccount(
             user_id=contract_info.owner_id, address=contract_info.owner_address, duration=1000)
+
+        # 토큰 홀더가 기본 송신자가 되도록 설정합니다.
+        setDefaultAccount(contract_info.owner_address)
+
+        return val_1
+
+    def transferToken(self, receiver, amount, ca):
+        """
+        토큰 홀더가 참여자에게 토큰을 전송합니다.
+        """
+
+        # 홀더 계정을 먼저 언락
+        val_1 = self.unlockHolder(ca=ca)
 
         # 수신자 계정도 언락
         val_2 = unlockAccount(
@@ -172,35 +176,40 @@ class ContractHandler():
         contract = getContract(address=ca)
         checksum_address = checksumAddress(receiver['address'])
 
-        # 토큰 홀더가 기본 송신자가 되도록 설정합니다.
-        setDefaultAccount(contract_info.owner_address)
-
         tx_hash = contract.functions.transfer(
             checksum_address, amount).transact()
         tx_receipt = waitForTransactionReceipt(tx_hash)
-        print('tx_receipt: ', tx_receipt)
+        # print('tx_receipt: ', tx_receipt)
 
         return tx_receipt
 
     def transferTokenFrom(self, sender, receiver, amount, ca):
         """
-        Transfer Token From - To
+        참여자 간의 토큰 전송을 수행합니다.
         """
 
-        val_1 = unlockAccount(
-            user_id=sender['userId'], address=sender['address'], duration=1000)
+        # 홀더 계정을 먼저 언락
+        val_1 = self.unlockHolder(ca=ca)
+
         val_2 = unlockAccount(
+            user_id=sender['userId'], address=sender['address'], duration=1000)
+        val_3 = unlockAccount(
             user_id=receiver['userId'], address=receiver['address'], duration=1000)
 
-        if val_1 is False or val_2 is False:
+        if val_1 is False or val_2 is False or val_3 is False:
             raise ValueError
 
         contract = getContract(address=ca)
 
-        print(contract.functions.transferFrom(
-            sender['address'], receiver['address'], amount).call())
+        sender_checksum_address = checksumAddress(sender['address'])
+        receiver_checksum_address = checksumAddress(receiver['address'])
 
-        return True
+        tx_hash = contract.functions.transferFrom(
+            sender_checksum_address, receiver_checksum_address, amount).transact()
+        tx_receipt = waitForTransactionReceipt(tx_hash)
+        # print('tx_receipt: ', tx_receipt)
+
+        return tx_receipt
 
     def callFunction(self, func_name, ca):
         """
