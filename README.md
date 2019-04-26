@@ -23,6 +23,9 @@ $ python3 manage.py runserver      // 테스트 서버 기동
 ---
 
 - 테스트 절차
+
+---
+
 - RPC 활성화된 Ethereum Node, PostgreSQL 을 기동해 주세요.
 - 커넥션 설정은 app/wallet/web3.py && app/setting.py 에서 작성합니다.
 - 스마트 컨트랙트는 app/contracts 디렉토리에서 확인 가능합니다.
