@@ -23,8 +23,9 @@ $ python3 manage.py runserver      // 테스트 서버 기동
 ---
 
 - 테스트 절차
-- 사용자와 컨트랙트 정보의 경우, DB 에서 조회하고 API 호출을 통해 결과를 보는 것이 빠릅니다.
-- DB 클라이언트 툴, Rest API 툴을 같이 사용하시는 것을 권장합니다.
+- RPC 활성화된 Ethereum Node, PostgreSQL 을 기동해 주세요.
+- 커넥션 설정은 app/wallet/web3.py && app/setting.py 에서 작성합니다.
+- 스마트 컨트랙트는 app/contracts 디렉토리에서 확인 가능합니다.
 - 현 시점으로 회원가입, 정보조회, 스마트 컨트랙트 배포, 토큰 할당, 토큰 전송, 잔액 조회 API를 제공합니다.
 
 ---

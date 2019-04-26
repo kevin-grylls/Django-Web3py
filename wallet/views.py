@@ -110,7 +110,7 @@ def transfer_token(request):
 def transfer_token_from(request):
     data = json.loads(request.body)
 
-    result = ContractHandler().transferTokenFrom(
+    result = ContractHandler().transferTokenFromTo(
         sender=data['sender'], receiver=data['receiver'], amount=data['amount'], ca=data['contractAddress']
     )
 

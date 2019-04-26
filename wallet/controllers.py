@@ -183,7 +183,7 @@ class ContractHandler():
 
         return tx_receipt
 
-    def transferTokenFrom(self, sender, receiver, amount, ca):
+    def transferTokenFromTo(self, sender, receiver, amount, ca):
         """
         참여자 간의 토큰 전송을 수행합니다.
         """
