@@ -109,6 +109,7 @@ $ python3 manage.py runserver      // 테스트 서버 기동
 
 - 이제 참여자간 토큰을 전송해 보겠습니다.
 - 수신자와 송신자, 수량과 CA 정보로 API 호출합니다.
+- POST -> http://localhost:8000/wallet/transfer_token_from/
 
 ```json
 {
