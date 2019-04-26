@@ -1,6 +1,5 @@
 pragma solidity ^0.5.0;
 
-
 library SafeMath {
     function add(uint a, uint b) internal pure returns (uint c) {
         c = a + b;
@@ -32,11 +31,9 @@ contract ERC20Interface {
     event Approval(address indexed tokenOwner, address indexed spender, uint tokens);
 }
 
-
 contract ApproveAndCallFallBack {
     function receiveApproval(address from, uint256 tokens, address token, bytes memory data) public;
 }
-
 
 contract Owned {
     address public owner;
@@ -64,7 +61,6 @@ contract Owned {
     }
 }
 
-
 contract BaseToken is ERC20Interface, Owned {
     using SafeMath for uint;
 
@@ -85,7 +81,6 @@ contract BaseToken is ERC20Interface, Owned {
         balances[owner] = _totalSupply;
         emit Transfer(address(0), owner, _totalSupply);
     }
-
 
     function totalSupply() public view returns (uint) {
         return _totalSupply.sub(balances[address(0)]);
@@ -114,7 +109,7 @@ contract BaseToken is ERC20Interface, Owned {
 
     function transferFrom(address from, address to, uint tokens) public returns (bool success) {
         balances[from] = balances[from].sub(tokens);
-        allowed[from][msg.sender] = allowed[from][msg.sender].sub(tokens);
+        // allowed[from][msg.sender] = allowed[from][msg.sender].sub(tokens);
         balances[to] = balances[to].add(tokens);
         emit Transfer(from, to, tokens);
         return true;
@@ -134,7 +129,6 @@ contract BaseToken is ERC20Interface, Owned {
     }
 
 
-    // 기본적으로 이더 거래 불가, 발급한 토큰간 거래만 가능
     function () external payable {
         revert();
     }

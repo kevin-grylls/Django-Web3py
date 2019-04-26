@@ -102,7 +102,7 @@ def transfer_token(request):
     result = ContractHandler().transferToken(
         receiver=data['receiver'], amount=data['amount'], ca=data['contractAddress'])
 
-    return JsonResponse({'result': result})
+    return JsonResponse({'result': True})
 
 
 @api_view(['POST'])

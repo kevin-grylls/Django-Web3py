@@ -102,10 +102,16 @@ class ContractHandler():
         print('From: ', tx_receipt['from'])
 
         contract = Contract(
-            address=tx_receipt['contractAddress'], owner=tx_receipt['from'], block_number=tx_receipt['blockNumber'])
+            address=tx_receipt['contractAddress'], owner_id=user_id,
+            owner_address=tx_receipt['from'], block_number=tx_receipt['blockNumber'])
         contract.save()
 
         return contract
+
+    def unlockOwner(self):
+        """
+        Unlock Owner
+        """
 
     def getAllFunctions(self, ca):
         """
@@ -147,6 +153,10 @@ class ContractHandler():
         Transfer Token To
         """
 
+        # 토큰 홀더 계정을 먼저 unlock
+        val_0 = unlockAccount(
+            user_id='kevin', address='0x9b69441c0b638f66C1f88411BD37f0D67C9975C5', duration=1000)
+
         val_1 = unlockAccount(
             user_id=receiver['userId'], address=receiver['address'], duration=1000)
 
@@ -155,6 +165,7 @@ class ContractHandler():
 
         contract = getContract(address=ca)
         checksum_address = checksumAddress(receiver['address'])
+        print('Checksum Address: ', checksum_address)
         result = contract.functions.transfer(
             checksum_address, amount).transact()
 
