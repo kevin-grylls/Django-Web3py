@@ -15,11 +15,9 @@ def deployContract(address):
 
     Contract = w3.eth.contract(abi=get_abi(), bytecode=get_bin()['object'])
     tx_hash = Contract.constructor().transact()
-    tx_receipt = w3.eth.waitForTransactionReceipt(str(tx_hash.hex()))
-
-    print('Contract: ', Contract)
     print('tx_hash: ', tx_hash.hex())
 
+    tx_receipt = w3.eth.waitForTransactionReceipt(str(tx_hash.hex()))
     return tx_receipt
 
 
@@ -28,11 +26,32 @@ def checksumAddress(address):
     return w3.toChecksumAddress(address)
 
 
+def setDefaultAccount(address):
+    w3.eth.defaultAccount = checksumAddress(address)
+    return True
+
+
 def getContract(address):
     """
     배포된 컨트랙트를 반환합니다.
     """
     return w3.eth.contract(address=checksumAddress(address), abi=get_abi())
+
+
+def getTransactionReceipt(tx_hash):
+    """
+    작업 중인 블록넘버를 제외하고 트랜잭션 결과를 반환합니다.
+    waitForTransactionReceipt() 보다 빠릅니다.
+    """
+    return w3.eth.getTransaction(tx_hash)
+
+
+def waitForTransactionReceipt(tx_hash):
+    """
+    작업 중인 블록넘버까지 포함합니다.
+    getTransactionReceipt() 보다 느립니다.
+    """
+    return w3.eth.waitForTransactionReceipt(tx_hash)
 
 
 def getWeb3():
@@ -59,7 +78,8 @@ def unlockAccount(user_id, address, duration):
     """
     계정을 언락상태로 설정하고 실행 결과를 리턴합니다.
     """
-    result = w3.personal.unlockAccount(address, user_id, duration)
+    result = w3.personal.unlockAccount(
+        checksumAddress(address), user_id, duration)
     print('Unlock Result: ', result)
     return result
 

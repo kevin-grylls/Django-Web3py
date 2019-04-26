@@ -57,6 +57,7 @@ $ python3 manage.py runserver      // 테스트 서버 기동
 ```
 
 - 발급할 토큰 홀더 정보와 함께 디플로이를 요청 합니다.
+- 홀더 계정이 eth.coinbase 이면서, 마이닝을 하고 있는 상태이어야 합니다.
 - POST -> http://localhost:8000/wallet/deploy/
 
 ```json
@@ -75,10 +76,9 @@ $ python3 manage.py runserver      // 테스트 서버 기동
 }
 ```
 
-- 토큰 생성 직후, 참여자들에게 토큰을 배분합니다.
-- 스마트 컨트랙트 디플로이 후 홀더가 참여자에게 토큰을 배분하는 API
+- 스마트 컨트랙트 배포 후, 참여자들에게 토큰을 배분합니다.
 - 토큰 홀더용 API 이기 때문에, 수신자 정보와 금액, CA 정보만 사용합니다.
-- POST -> http://localhost:8000/wallet/transfer_token
+- POST -> http://localhost:8000/wallet/transfer_token/
 
 ```json
 {
@@ -91,6 +91,16 @@ $ python3 manage.py runserver      // 테스트 서버 기동
 }
 ```
 
+- 정상적인 호출인 경우 반환되는 메시지
+
+```json
+{
+  "blockNumber": 8081,
+  "from": "0xae628b2698d1f213d461307b139f255d01febafb",
+  "gasUsed": 36158
+}
+```
+
 - 토큰이 전송 되었는지, 각 계정의 잔고를 확인하는 방법
 - POST -> http://localhost:8000/wallet/balance_of/
 
@@ -99,6 +109,14 @@ $ python3 manage.py runserver      // 테스트 서버 기동
   "userId": "irene",
   "address": "0x62Cf333dB24179824ddD7036ea9De7771C875A36",
   "contractAddress": "0x5EDD1E5BDB6ddF68515F3c18FCbc133C6c2E3109"
+}
+```
+
+- 정상적으로 수행되었을 경우, 반환 값
+
+```json
+{
+  "result": 5200
 }
 ```
 

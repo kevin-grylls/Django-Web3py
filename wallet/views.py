@@ -102,7 +102,8 @@ def transfer_token(request):
     result = ContractHandler().transferToken(
         receiver=data['receiver'], amount=data['amount'], ca=data['contractAddress'])
 
-    return JsonResponse({'result': True})
+    return JsonResponse({'blockNumber': result['blockNumber'],
+                         'from': result['from'], 'gasUsed': result['gasUsed']})
 
 
 @api_view(['POST'])

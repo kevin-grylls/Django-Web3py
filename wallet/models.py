@@ -28,7 +28,7 @@ class Contract(models.Model):
     """
     address = models.CharField(max_length=42, unique=True)
     owner_id = models.CharField(max_length=30)
-    owner_addresss = models.CharField(max_length=42)
+    owner_address = models.CharField(max_length=42)
     block_number = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
 
