@@ -13,6 +13,10 @@ urlpatterns = [
     path('deploy/', views.deploy, name='deploy'),
     path('all_functions/', views.all_functions, name='all_functions'),
     path('balance_of/', views.balance_of, name='balance_of'),
+    path('balance_of_all/', views.balance_of_all, name='balance_of_all'),
     path('total_supply/', views.total_supply, name='total_supply'),
     path('unlock_all/', views.unlock_all, name='unlock_all'),
+    path('get_coinbase/', views.get_coinbase, name='get_coinbase'),
+    path('set_miner/', views.set_miner, name='set_miner'),
+    path('status_miner/', views.status_miner, name='status_miner'),
 ]

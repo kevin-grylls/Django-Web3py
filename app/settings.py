@@ -38,8 +38,35 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
+# CORS
+CORS_ALLOW_CREDENTIALS = False
+CORS_ORIGIN_ALLOW_ALL = True
+
+CORS_ALLOW_METHODS = (
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+)
+
+CORS_ALLOW_HEADERS = (
+    'access-control-allow-origin',
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+)
 
 ROOT_URLCONF = 'app.urls'
 
@@ -60,11 +87,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'app.wsgi.application'
-
-# CORS
-CORS_ORIGIN_WHITELIST = (
-    'localhost:3000'
-)
 
 # Rest Framework
 REST_FRAMEWORK = {

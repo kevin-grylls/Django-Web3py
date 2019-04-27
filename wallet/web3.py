@@ -31,6 +31,19 @@ def setDefaultAccount(address):
     return True
 
 
+def statusMining():
+    return w3.eth.mining
+
+
+def setMining(status):
+    if status is True:
+        w3.miner.start(1)
+        return True
+    else:
+        w3.miner.stop()
+        return False
+
+
 def getContract(address):
     """
     배포된 컨트랙트를 반환합니다.

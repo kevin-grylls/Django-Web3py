@@ -1,6 +1,7 @@
 from .models import Wallet, Contract
 from .web3 import getAccount, getBalance, sendEther, unlockAccount, deployContract
-from .web3 import waitForTransactionReceipt, getContract, checksumAddress, setDefaultAccount
+from .web3 import waitForTransactionReceipt, getContract, checksumAddress
+from .web3 import setDefaultAccount, setMining, statusMining, getCoinbase
 import json
 
 
@@ -145,6 +146,17 @@ class ContractHandler():
 
         return result
 
+    def balanceOfAll(self, ca):
+
+        contract = getContract(address=ca)
+        query_result = []
+
+        for wallet in Wallet.objects.all():
+            query_result.append({'userId': wallet.user_id, 'balance': contract.functions.balanceOf(
+                checksumAddress(wallet.address)).call()})
+
+        return query_result
+
     def unlockHolder(self, ca):
         # 컨트랙트 정보 검색
         contract_info = Contract.objects.filter(address=ca).first()
@@ -240,3 +252,19 @@ class Test():
                           address=wallet.address, duration=1000)
 
         return True
+
+    def getCoinbase(self):
+        return getCoinbase()
+
+    def statusMining(self):
+        return statusMining()
+
+    def setMiner(self, status):
+        return setMining(status)
+
+    def getBalanceAll(self):
+        balance_list = []
+        for wallet in Wallet.objects.all():
+            balance_list.append(getBalance(address=wallet.address))
+
+        return balance_list

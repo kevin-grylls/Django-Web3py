@@ -96,9 +96,17 @@ def balance_of(request):
 
 
 @api_view(['POST'])
+def balance_of_all(request):
+    data = json.loads(request.body)
+    result = ContractHandler().balanceOfAll(
+        ca=data['contractAddress'])
+    return JsonResponse({'result': result})
+
+
+@api_view(['POST'])
 def transfer_token(request):
     data = json.loads(request.body)
-
+    print(data)
     result = ContractHandler().transferToken(
         receiver=data['receiver'], amount=data['amount'], ca=data['contractAddress'])
 
@@ -121,4 +129,23 @@ def transfer_token_from(request):
 @api_view(['GET'])
 def unlock_all(request):
     result = Test().unlockAll()
+    return JsonResponse({'result': result})
+
+
+@api_view(['GET'])
+def get_coinbase(request):
+    result = Test().getCoinbase()
+    return JsonResponse({'result': str(result)})
+
+
+@api_view(['GET'])
+def status_miner(request):
+    result = Test().statusMining()
+    return JsonResponse({'result': result})
+
+
+@api_view(['POST'])
+def set_miner(request):
+    data = json.loads(request.body)
+    result = Test().setMiner(data['status'])
     return JsonResponse({'result': result})
