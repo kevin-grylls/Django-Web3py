@@ -1,12 +1,12 @@
-####
+##### WEB3.py API Server
 
-- 참고사항
+####### Preparation before you go
 
 ---
 
 - DB: PostgreSQL -> localhost:5432
 - Web3: Web3.py -> EVM 테스트넷 기준으로 개발되었습니다.
-- Contract: root/contracts/\* -> 토큰 디플로이에 시간이 소요되므로 잠시 기다리셔야 됩니다.
+- Contract: root/contracts/\* -> 솔리디티, ABI, Bytecode 디렉토리
 
 ---
 
