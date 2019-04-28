@@ -5,7 +5,7 @@
 ---
 
 - DB: PostgreSQL -> localhost:5432
-- Web3: Web3.py -> 가나슈 혹은 로컬 개발환경에 맞춰서 사용하면 됩니다.
+- Web3: Web3.py -> EVM 테스트넷 기준으로 개발되었습니다.
 - Contract: root/contracts/\* -> 토큰 디플로이에 시간이 소요되므로 잠시 기다리셔야 됩니다.
 
 ---
@@ -24,7 +24,7 @@ $ python3 manage.py runserver      // 테스트 서버 기동
 
 - 테스트 절차
   - RPC 활성화된 Ethereum Node, PostgreSQL 을 기동해 주세요.
-  - 커넥션 설정은 app/wallet/web3.py && app/setting.py 에서 작성합니다.
+  - 커넥션 설정은 app/wallet/web3.py && app/settings.py 에서 작성합니다.
   - 스마트 컨트랙트는 app/contracts 디렉토리에서 확인 가능합니다.
   - 현 시점으로 회원가입, 정보조회, 스마트 컨트랙트 배포, 토큰 할당, 토큰 전송, 잔액 조회 API를 제공합니다.
 
