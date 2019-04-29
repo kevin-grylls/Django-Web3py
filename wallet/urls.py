@@ -19,4 +19,11 @@ urlpatterns = [
     path('get_coinbase/', views.get_coinbase, name='get_coinbase'),
     path('set_miner/', views.set_miner, name='set_miner'),
     path('status_miner/', views.status_miner, name='status_miner'),
+    path('get_latest_block/', views.get_latest_block, name='get_latest_block'),
+    path('get_transaction_of/', views.get_transaction_of,
+         name='get_transaction_of'),
+    path('get_transaction_all/', views.get_transaction_all,
+         name='get_transaction_all'),
+    path('transaction_list/', views.TransactionList.as_view(),
+         name='transaction_list'),
 ]

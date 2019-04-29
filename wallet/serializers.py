@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Wallet
+from .models import Wallet, Transaction
 
 
 class WalletSerializer(serializers.ModelSerializer):
@@ -12,3 +12,19 @@ class WalletSerializer(serializers.ModelSerializer):
             'created_at',
         )
         model = Wallet
+
+
+class TransactionSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        fields = (
+            'contract_address',
+            'origin',
+            'destination',
+            'amount',
+            'gas_used',
+            'block_number',
+            'tx_hash',
+            'created_at'
+        )
+        model = Transaction

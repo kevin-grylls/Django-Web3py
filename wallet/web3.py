@@ -22,7 +22,6 @@ def deployContract(address):
 
 
 def checksumAddress(address):
-
     return w3.toChecksumAddress(address)
 
 
@@ -49,6 +48,13 @@ def getContract(address):
     배포된 컨트랙트를 반환합니다.
     """
     return w3.eth.contract(address=checksumAddress(address), abi=get_abi())
+
+
+def getTransaction(tx_hash):
+    """
+    트랜잭션 해시값으로 트랜잭션 정보를 가져옵니다.
+    """
+    return w3.eth.getTransaction(tx_hash)
 
 
 def getTransactionReceipt(tx_hash):
@@ -112,4 +118,13 @@ def sendEther(sender, receiver, amount):
     wai_amount = w3.toWei(str(amount), 'ether')  # wei 변환
     result = w3.eth.sendTransaction(
         {'to': receiver, 'from': sender, 'value': wai_amount})
+    return result
+
+
+def getLatestBlock():
+    """
+    마지막 블록정보를 반환합니다.
+    """
+
+    result = w3.eth.getBlock('latest')
     return result

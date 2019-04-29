@@ -1,7 +1,8 @@
-from .models import Wallet, Contract
+from .models import Wallet, Contract, Transaction
 from .web3 import getAccount, getBalance, sendEther, unlockAccount, deployContract
 from .web3 import waitForTransactionReceipt, getContract, checksumAddress
 from .web3 import setDefaultAccount, setMining, statusMining, getCoinbase
+from .web3 import getLatestBlock, getTransaction
 import json
 
 
@@ -219,7 +220,7 @@ class ContractHandler():
         tx_hash = contract.functions.transferFrom(
             sender_checksum_address, receiver_checksum_address, amount).transact()
         tx_receipt = waitForTransactionReceipt(tx_hash)
-        # print('tx_receipt: ', tx_receipt)
+        print('tx_receipt: ', tx_receipt['logs'])
 
         return tx_receipt
 
@@ -239,6 +240,44 @@ class ContractHandler():
         print(contract.functions[selected_function]().call())
 
         return True
+
+
+class TransactionHandler():
+    """
+    거래 이력 저장/검색 기능을 제공하는 클래스.
+    """
+
+    def saveTransaction(self, ca, origin, dest, amount, gas_used, tx_hash, block):
+        transaction = Transaction(
+            contract_address=ca, origin=origin,
+            destination=dest, amount=amount, gas_used=gas_used,
+            tx_hash=tx_hash, block_number=block)
+
+        transaction.save()
+        return transaction
+
+    def getTransactionAll(self):
+        return Transaction.objects.all()
+
+    def getTransactionFromDB(self):
+        result = [{
+            'contractAddress': transaction.contract_address,
+            'origin': transaction.origin,
+            'destination': transaction.destination,
+            'amount': transaction.amount,
+            'gasUsed': transaction.gas_used,
+            'blockNumber': transaction.block_number,
+            'txHash': transaction.tx_hash,
+            'createdAt': transaction.created_at
+        }
+            for transaction in Transaction.objects.all()]
+        return result
+
+    def getTransactionFromEVM(self, tx_hash):
+        return getTransaction(tx_hash=tx_hash)
+
+    def getLatestBlock(self):
+        return getLatestBlock()
 
 
 class Test():

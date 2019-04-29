@@ -49,6 +49,8 @@ class Transaction(models.Model):
     origin = models.CharField(max_length=42)
     destination = models.CharField(max_length=42)
     amount = models.FloatField(default=0.0)
+    tx_hash = models.CharField(max_length=66)
+    gas_used = models.IntegerField(default=0)
     block_number = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -56,4 +58,4 @@ class Transaction(models.Model):
         ordering = ['created_at', ]
 
     def __str__(self):
-        return self.block_number
+        return self.tx_hash
