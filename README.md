@@ -6,7 +6,7 @@
 
 - DB: PostgreSQL -> localhost:5432
 - Web3: Web3.py -> EVM 테스트넷 기준으로 개발되었습니다.
-- Contract: root/contracts/\* -> 솔리디티, ABI, Bytecode 디렉토리
+- Contract: root/contracts/\* -> Solidity, ABI, Bytecode File
 
 ---
 
