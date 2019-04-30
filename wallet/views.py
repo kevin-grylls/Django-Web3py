@@ -26,7 +26,7 @@ def write_block_response(result):
         'nonce': result['nonce'],
         'transactionIndex': result['transactionIndex'],
         'from': result['from'],
-        'contractAddress': result['to'],
+        'to': result['to'],
         'value': result['value'],
         'v': result['v'],
         'r': result['r'].hex(),
@@ -173,9 +173,10 @@ def get_transaction_all(request):
 
 @api_view(['POST'])
 def get_transaction_of(request):
-    data = json.loads(request)
+    data = json.loads(request.body)
     result = TransactionHandler().getTransactionFromEVM(data['txHash'])
-    return JsonResponse({'result': result})
+    response = write_block_response(result)
+    return JsonResponse({'result': response})
 
 
 @api_view(['GET'])
