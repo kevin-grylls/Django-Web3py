@@ -30,29 +30,30 @@ $ python3 manage.py runserver      // 테스트 서버 기동
 
 ---
 
-- ERC20 토큰 내에서 거래할 계정들을 먼저 생성합니다.
-- POST -> http://localhost:8000/wallet/create/
+- 1. 지갑 생성 (POST)
+- http://localhost:8000/wallet/create/
 
 ```json
+# Sample Request
 {
   "userId": "kevin",
   "password": "1004"
 }
 ```
 
-- 계정 생성 직후나 로그인 후에도 개인 정보 확인이 가능합니다.
-- POST -> http://localhost:8000/wallet/login/
+- 2. 로그인 (POST)
+- http://localhost:8000/wallet/login/
 
 ```json
+# Sample Request
 {
   "userId": "kevin",
   "password": "1004"
 }
 ```
 
-- 정상적인 호출인 경우
-
 ```json
+# Sample Response
 {
   "userId": "kevin",
   "password": "1004",
