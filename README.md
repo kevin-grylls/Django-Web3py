@@ -234,6 +234,7 @@ $ python3 manage.py runserver      // 테스트 서버 기동
 ```
 
 - 11. 모든 트랜잭션 확인 (GET)
+- 미들웨어에서 처리한 전체 DB를 조회합니다.
 - http://localhost:8000/wallet/get_transaction_all/
 
 ```json
@@ -309,62 +310,13 @@ $ python3 manage.py runserver      // 테스트 서버 기동
             "blockNumber": 5420,
             "txHash": "0x6b53f499c93c9925477473dfe5195d2ade059f9ab31f27a120c8cbd54c9cdfb4",
             "createdAt": "2019-04-30T02:32:31.504Z"
-        },
-        {
-            "contractAddress": "0x74a65E4E1a5418ef09C6b36689980c830E781e0D",
-            "origin": "0x5fc1b8f93cf4a6aa3b35a928882fda0296bd07f7",
-            "destination": "0x66D93a3B1d024E86bef3dd8E17e9644F41ef0252",
-            "amount": 1000,
-            "gasUsed": 51286,
-            "blockNumber": 5421,
-            "txHash": "0x2f8f6cf54a210dc85e69785b427d4f8dc59cec8a08229ef55d7a27158c876815",
-            "createdAt": "2019-04-30T02:32:43.835Z"
-        },
-        {
-            "contractAddress": "0x74a65E4E1a5418ef09C6b36689980c830E781e0D",
-            "origin": "0x5fc1b8f93cf4a6aa3b35a928882fda0296bd07f7",
-            "destination": "0xe21751aCa387b7d66Fc8F1873DC16Eb243cA1e5A",
-            "amount": 1000,
-            "gasUsed": 51286,
-            "blockNumber": 5422,
-            "txHash": "0xdf37ddc8587e8f5c96d12e0cde83ec289ad08a85c22a1fcdab171b8e28d9ce5d",
-            "createdAt": "2019-04-30T02:33:06.746Z"
-        },
-        {
-            "contractAddress": "0x74a65E4E1a5418ef09C6b36689980c830E781e0D",
-            "origin": "0x5fc1b8f93cf4a6aa3b35a928882fda0296bd07f7",
-            "destination": "0x0137dFea2CdF3A1C7fd25FfE95E99eAd3dC5cAac",
-            "amount": 1000,
-            "gasUsed": 51286,
-            "blockNumber": 5423,
-            "txHash": "0xdb2746f9fc3907cf37e71e65851f099ccb04a2cd73de358225c29484926d4b6a",
-            "createdAt": "2019-04-30T02:33:19.064Z"
-        },
-        {
-            "contractAddress": "0x74a65E4E1a5418ef09C6b36689980c830E781e0D",
-            "origin": "0x5fc1b8f93cf4a6aa3b35a928882fda0296bd07f7",
-            "destination": "0xe21751aCa387b7d66Fc8F1873DC16Eb243cA1e5A",
-            "amount": 2000,
-            "gasUsed": 36286,
-            "blockNumber": 5424,
-            "txHash": "0x99ae413a4ce89b7899f218dbe9a1ad939d2d7b000e1bd69f2bed556aa4788553",
-            "createdAt": "2019-04-30T02:34:20.698Z"
-        },
-        {
-            "contractAddress": "0x74a65E4E1a5418ef09C6b36689980c830E781e0D",
-            "origin": "0x5fc1b8f93cf4a6aa3b35a928882fda0296bd07f7",
-            "destination": "0x8889D2eE6b47984c16C24d755000fc9cF562DbF1",
-            "amount": 1500,
-            "gasUsed": 37536,
-            "blockNumber": 5427,
-            "txHash": "0x02a05a6fd5c0d71f92e2e4d38aadc9a1e66bc70171ddc629ab51574eeb9ebb2b",
-            "createdAt": "2019-04-30T02:34:47.071Z"
         }
     ]
 }
 ```
 
-- 12. 트랜잭션 확인 (POST)
+- 12. 선택 트랜잭션 확인 (POST)
+- EVM 노드를 통해 기록된 블록을 직접 조회합니다.
 - http://localhost:8000/wallet/get_transfer_of/
 
 ```json
