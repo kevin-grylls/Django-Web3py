@@ -270,46 +270,6 @@ $ python3 manage.py runserver      // 테스트 서버 기동
             "blockNumber": 3899,
             "txHash": "0x7cdf4637874fe06d16166d97a610e20124818a150c8a7d625df9f292ea0b3c19",
             "createdAt": "2019-04-29T14:29:18.026Z"
-        },
-        {
-            "contractAddress": "0x4448541739677099A84A24888eb0d9ad7f2fEc0e",
-            "origin": "0x5fc1b8f93cf4a6aa3b35a928882fda0296bd07f7",
-            "destination": "0x5fc1b8f93cF4a6Aa3b35a928882Fda0296bd07F7",
-            "amount": 1000,
-            "gasUsed": 37600,
-            "blockNumber": 4223,
-            "txHash": "0x8f9eeeaa706e8a5da347503475f92876093f5e070e67dcc667a641f201400aa1",
-            "createdAt": "2019-04-29T15:30:02.467Z"
-        },
-        {
-            "contractAddress": "0x74a65E4E1a5418ef09C6b36689980c830E781e0D",
-            "origin": "0x5fc1b8f93cf4a6aa3b35a928882fda0296bd07f7",
-            "destination": "0x8889D2eE6b47984c16C24d755000fc9cF562DbF1",
-            "amount": 1000,
-            "gasUsed": 51222,
-            "blockNumber": 5414,
-            "txHash": "0x4bb7b28de7093ce685c5f630bab36393089a0e57fcfc6f2d2f2cbe3d32bcd701",
-            "createdAt": "2019-04-30T02:31:02.641Z"
-        },
-        {
-            "contractAddress": "0x74a65E4E1a5418ef09C6b36689980c830E781e0D",
-            "origin": "0x5fc1b8f93cf4a6aa3b35a928882fda0296bd07f7",
-            "destination": "0xdFE96eA2100648025bf9A748a1Ead28734357201",
-            "amount": 1000,
-            "gasUsed": 51286,
-            "blockNumber": 5416,
-            "txHash": "0x003af556d6331669fb93bf787dec4113bd391d30f67e456e9e309195fa7da24b",
-            "createdAt": "2019-04-30T02:31:16.345Z"
-        },
-        {
-            "contractAddress": "0x74a65E4E1a5418ef09C6b36689980c830E781e0D",
-            "origin": "0x5fc1b8f93cf4a6aa3b35a928882fda0296bd07f7",
-            "destination": "0x24d8c6df24F27159C29CF7C314A5AE44C1952Db4",
-            "amount": 1000,
-            "gasUsed": 51286,
-            "blockNumber": 5420,
-            "txHash": "0x6b53f499c93c9925477473dfe5195d2ade059f9ab31f27a120c8cbd54c9cdfb4",
-            "createdAt": "2019-04-30T02:32:31.504Z"
         }
     ]
 }
