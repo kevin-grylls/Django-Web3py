@@ -51,7 +51,6 @@ $ python3 manage.py runserver      // 테스트 서버 기동
   "password": "1004"
 }
 ```
-
 ```json
 # Sample Response
 {
@@ -63,31 +62,31 @@ $ python3 manage.py runserver      // 테스트 서버 기동
 }
 ```
 
-- 발급할 토큰 홀더 정보와 함께 디플로이를 요청 합니다.
-- 홀더 계정이 eth.coinbase 이면서, 마이닝을 하고 있는 상태이어야 합니다.
-- POST -> http://localhost:8000/wallet/deploy/
+- 3. 스마트 컨트랙트 배포 (POST)
+- http://localhost:8000/wallet/deploy/
+- 배포 계정이 Coinbase 설정 되어있고, EVM 채굴 상태이어야 합니다.
 
 ```json
+# Sample Request
 {
   "userId": "kevin",
   "address": "0x9b69441c0b638f66C1f88411BD37f0D67C9975C5"
 }
 ```
-
-- 정상적인 호출인 경우
-
 ```json
+# Sample Response
 {
   "contractAddress": "0x5EDD1E5BDB6ddF68515F3c18FCbc133C6c2E3109",
   "createdAt": "2019-04-26 03:07:26.843151+00:00"
 }
 ```
 
-- 스마트 컨트랙트 배포 후, 참여자들에게 토큰을 배분합니다.
-- 토큰 홀더용 API 이기 때문에, 수신자 정보와 금액, CA 정보만 사용합니다.
-- POST -> http://localhost:8000/wallet/transfer_token/
+- 4. 토큰 에어 드랍 (POST)
+- http://localhost:8000/wallet/transfer_token/
+- 토큰 홀더만 API 실행 가능합니다.
 
 ```json
+# Sample Request
 {
   "receiver": {
     "userId": "ellie",
@@ -97,10 +96,8 @@ $ python3 manage.py runserver      // 테스트 서버 기동
   "contractAddress": "0x5EDD1E5BDB6ddF68515F3c18FCbc133C6c2E3109"
 }
 ```
-
-- 정상적인 호출인 경우 반환되는 메시지
-
 ```json
+# Sample Response
 {
   "blockNumber": 8081,
   "from": "0xae628b2698d1f213d461307b139f255d01febafb",
@@ -108,11 +105,12 @@ $ python3 manage.py runserver      // 테스트 서버 기동
 }
 ```
 
-- 이제 참여자간 토큰을 전송해 보겠습니다.
+- 5. 참여자간 토큰 전송 (POST)
+- http://localhost:8000/wallet/transfer_token_from/
 - 수신자와 송신자, 수량과 CA 정보로 API 호출합니다.
-- POST -> http://localhost:8000/wallet/transfer_token_from/
 
 ```json
+# Sample Request
 {
   "sender": {
     "userId": "irene",
@@ -126,10 +124,8 @@ $ python3 manage.py runserver      // 테스트 서버 기동
   "contractAddress": "0xA4753bA6DDb8C86b205f228ddfE63a95803d888b"
 }
 ```
-
-- 정상적인 호출 시 반환 예상 값
-
 ```json
+# Sample Response
 {
   "blockNumber": 8304,
   "from": "0xae628b2698d1f213d461307b139f255d01febafb",
